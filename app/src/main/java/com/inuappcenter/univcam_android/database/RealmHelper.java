@@ -4,12 +4,11 @@ import com.inuappcenter.univcam_android.entites.Album;
 import com.inuappcenter.univcam_android.entites.AlbumDetail;
 import com.inuappcenter.univcam_android.entites.Picture;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import io.realm.exceptions.RealmException;
@@ -96,6 +95,31 @@ public class RealmHelper {
         }
     }
 
+    /** 앨범명 변경*/
+    public void updateAlbumName(@Nullable final String oldAlbumName, @Nullable final String newAlbumName) {
+        final Album album = realm.where(Album.class).equalTo("albumName", oldAlbumName).findFirst();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                album.setAlbumName(newAlbumName);
+            }
+        });
+    }
+
+
+    /** 앨범삭제 */
+    public void deleteAlbum(@Nullable String albumName) {
+        final Album album = realm.where(Album.class).equalTo("albumName", albumName).findFirst();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                album.deleteFromRealm();
+            }
+        });
+    }
+
     /** 최신 이미지 가져오기 **/
     public String getLatestPicturePath(final String albumName) {
         Album album = realm.where(Album.class).equalTo("albumName", albumName).findFirst();
@@ -147,6 +171,7 @@ public class RealmHelper {
             // 오래된 순
             albums = realm.where(Album.class).findAllSorted("albumDate",Sort.ASCENDING);
         }
+
     }
 
 
@@ -157,6 +182,7 @@ public class RealmHelper {
         for (Album album : albums) {
             lates.add(album);
         }
+
         return lates;
     }
 
@@ -202,6 +228,8 @@ public class RealmHelper {
         }
         return favoriteAlbums;
     }
+
+
 
 
     // TODO: 앨범 정렬, 앨범명 수정, 앨범 삭제, 앨범 이동, 사진 이동, 사진 카테고리 변경

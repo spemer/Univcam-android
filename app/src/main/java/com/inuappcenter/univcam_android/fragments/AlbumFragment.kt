@@ -19,7 +19,7 @@ import android.widget.Toast
 import com.inuappcenter.univcam_android.R
 import com.inuappcenter.univcam_android.activities.*
 import com.inuappcenter.univcam_android.database.RealmHelper
-import com.inuappcenter.univcam_android.dialogs.AlbumDialogFragment
+import com.inuappcenter.univcam_android.dialogs.AddAlbumDialogFragment
 import com.inuappcenter.univcam_android.dialogs.AlbumDialogInterface
 import com.inuappcenter.univcam_android.entites.Album
 import com.inuappcenter.univcam_android.views.AlbumViews.AlbumViewAdapter
@@ -205,7 +205,7 @@ class AlbumFragment : BaseFragment(){
             R.id.create_foler -> {
                 val ft = fragmentManager.beginTransaction()
 
-                val createAlbumDialog = AlbumDialogFragment.newInstance(AlbumDialogInterface {
+                val createAlbumDialog = AddAlbumDialogFragment.newInstance(AlbumDialogInterface {
                     val albumName = it
                     var date = Date()
 
@@ -216,7 +216,7 @@ class AlbumFragment : BaseFragment(){
                             file.mkdirs()
                         }
 //
-                        mAlbumViewAdapter.addAlbum(Album(it, date, file.toString(),"R.drawable.img_box_174_dp", 0, false, null))
+                        mAlbumViewAdapter.addAlbum(Album(it, date, file.toString(), "R.drawable.img_box_174_dp", 0, false, null))
 
 
                         saveAlbumToRealm(albumName, file.toString(), date)

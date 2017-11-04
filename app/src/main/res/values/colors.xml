@@ -18,9 +18,6 @@
     <color name="image_selected">@color/light_grey</color>
     <color name="image_checked">@color/transparent_layer</color>
 
-
-
-
     <!-- UnivCam colors.  -->
     <color name="very_light_grey">#60353946</color>
     <color name="transparent_layer">#40353946</color>
@@ -29,8 +26,7 @@
     <color name="warm_pink">#ff4773</color>
     <color name="charcoal_grey">#353946</color>
     <color name="cool_grey">#babac0</color>
-    <color name="light_grey">#dfdfdf</color>  <!-- stroke only -->
-
-
+    <color name="light_grey">#dfdfdf</color>
+    <color name="shadow">#51000000</color>
 
 </resources>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/window_background"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/window_background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageButton
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="4dp"
+            android:background="@android:color/transparent"
+            android:tint="@color/dialog_text"
+            android:id="@+id/cancel_button"
+            android:padding="13dp"
+            android:src="@drawable/ic_close_white_24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <Button
+            android:enabled="false"
+            android:id="@+id/ok_button"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textColor="@color/text_hint"
+            android:layout_width="52dp"
+            android:layout_height="40dp"
+            android:text="확인"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
+            android:background="@android:color/transparent"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+
+
+        <TextView
+            android:text="앨범이름변경"
+            android:textStyle="bold"
+            android:textSize="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/text_primary"
+            android:lineSpacingExtra="11.2sp"/>
+
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_marginTop="64dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/album_title_et"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:background="@null"
+            android:layout_marginLeft="16dp"
+            android:hint="앨범명을 입력해주세요(20자 이내)"
+            android:clickable="true"
+            android:maxLength="20"
+            android:ems="10"
+            android:singleLine="true"
+            android:focusableInTouchMode="true"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/text_primary">
+            <requestFocus />
+        </EditText>
+
+        <ImageButton
+            android:layout_marginRight="4dp"
+            android:background="@android:color/transparent"
+            android:tint="@color/dialog_text"
+            android:id="@+id/delete_button"
+            android:padding="13dp"
+            android:src="@drawable/ic_close_white_24dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/cannot_add_album"
+        android:visibility="gone"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="@color/warm_pink"
+        android:lineSpacingExtra="18.4sp"
+        android:text="이미 동일한 이름을 가진 앨범이 있습니다" />
+
+
+
+
+
+
+
+</LinearLayout>
+

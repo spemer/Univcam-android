@@ -3,6 +3,7 @@ package com.inuappcenter.univcam_android.views.AlbumViews
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.widget.PopupMenu
@@ -14,6 +15,11 @@ import com.inuappcenter.univcam_android.R
 import com.inuappcenter.univcam_android.activities.AlbumActivity
 import com.inuappcenter.univcam_android.activities.AlbumDetailActivity
 import com.inuappcenter.univcam_android.database.RealmHelper
+import com.inuappcenter.univcam_android.dialogs.AddAlbumDialogFragment
+import com.inuappcenter.univcam_android.dialogs.AlbumDeleteDialogFragment
+import com.inuappcenter.univcam_android.dialogs.AlbumDeleteInterface
+import com.inuappcenter.univcam_android.dialogs.AlbumRenameInterface
+import com.inuappcenter.univcam_android.dialogs.RenameAlbumDialogFragment
 import com.inuappcenter.univcam_android.entites.Album
 import com.inuappcenter.univcam_android.entites.Picture
 import com.inuappcenter.univcam_android.fragments.AlbumFragment
@@ -62,7 +68,7 @@ class AlbumViewAdapter(var fragment: AlbumFragment, var context: AlbumActivity, 
         realmHelper.updateAlbumSorted(sort)
         albumList = realmHelper.albums
 
-        val item = albumList.get(position)
+        val item = albumList[position]
 
         if (realmHelper.getLatestPicturePath(item.albumName) != null) {
             Glide.with(context)
@@ -81,23 +87,59 @@ class AlbumViewAdapter(var fragment: AlbumFragment, var context: AlbumActivity, 
             popupMenu.inflate(R.menu.menu_album)
             popupMenu.setOnMenuItemClickListener{
                 when(it.itemId) {
-                    R.id.text_name -> {
+                    R.id.album_delete -> {
+
+                        val ft = fragment.fragmentManager.beginTransaction()
+
+                        val deleteeAlbumDialog = AlbumDeleteDialogFragment.newInstance(AlbumDeleteInterface {
+                            val albumName = it
+
+                            val sdcardState = Environment.getExternalStorageState()
+                            if (Environment.MEDIA_MOUNTED == sdcardState) {
+                                val file = File(context.getExternalFilesDir(null), albumName)
+
+
+                                deleteDirectory(file)
+                                realmHelper.deleteAlbum(albumName)
+                                albumList.removeAt(position)
+                                notifyDataSetChanged()
+
+                            }
+
+                        }, item.albumName)
+                        deleteeAlbumDialog.show(ft, "dialog")
+
 
                         true
                     }
-                    R.id.text_name_reverse -> {
 
-                        true
-                    }
-                    R.id.text_name -> {
 
-                        true
-                    }
-                    R.id.time -> {
+                    R.id.album_rename -> {
 
-                        true
-                    }
-                    R.id.text_time_reverse -> {
+                        val ft = fragment.fragmentManager.beginTransaction()
+
+                        val deleteeAlbumDialog = RenameAlbumDialogFragment.newInstance({ oldAlbumName, newAlbumName->
+
+                            val sdcardState = Environment.getExternalStorageState()
+                            if (Environment.MEDIA_MOUNTED == sdcardState) {
+                                val oldfile = File(context.getExternalFilesDir(null), oldAlbumName)
+                                val newfile = File(context.getExternalFilesDir(null), newAlbumName)
+
+
+                                updateDirectory(oldfile, newfile)
+                                realmHelper.updateAlbumName(oldAlbumName, newAlbumName)
+
+
+                                var newAlbum = albumList[position]
+                                newAlbum.albumName = newAlbumName
+                                albumList.set(position, newAlbum)
+                                notifyDataSetChanged()
+
+                            }
+
+                        }, item.albumName)
+                        deleteeAlbumDialog.show(ft, "dialog")
+
 
                         true
                     }
@@ -129,6 +171,29 @@ class AlbumViewAdapter(var fragment: AlbumFragment, var context: AlbumActivity, 
         }
 
 
+    }
+
+    fun updateDirectory(oldFile: File, newFile: File) {
+        if (oldFile.exists()) {
+            oldFile.renameTo(newFile)
+        }
+    }
+
+
+    fun deleteDirectory(file: File) {
+        if (file.exists()) {
+            if (file.isDirectory) {
+                val files = file.listFiles()
+                for (i in files.indices) {
+                    if (files[i].isDirectory) {
+                        deleteDirectory(files[i])
+                    } else {
+                        files[i].delete()
+                    }
+                }
+            }
+            file.delete()
+        }
     }
 
     override fun getItemCount(): Int {

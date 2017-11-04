@@ -26,18 +26,23 @@ import io.realm.Realm;
  * Created by ichaeeun on 2017. 7. 24..
  */
 
-public class AlbumDialogFragment extends android.support.v4.app.DialogFragment {
+public class RenameAlbumDialogFragment extends DialogFragment {
 
     EditText albumTitleEt;
     TextView okButton;
     ImageButton cancelButton;
-    AlbumDialogInterface mAlbumDialogInterface;
+    ImageButton resetButton;
+    AlbumRenameInterface mAlbumDialogInterface;
+
     Realm mRealm;
     RealmHelper mRealmHelper;
     TextView cannot_add_album;
 
-    public static AlbumDialogFragment newInstance(AlbumDialogInterface albumDialogInterface) {
-        AlbumDialogFragment fragment = new AlbumDialogFragment();
+    public static RenameAlbumDialogFragment newInstance(AlbumRenameInterface albumDialogInterface, String oldName) {
+        RenameAlbumDialogFragment fragment = new RenameAlbumDialogFragment();
+        Bundle bundle = new Bundle(1);
+        bundle.putString("oldName", oldName);
+        fragment.setArguments(bundle);
         fragment.mAlbumDialogInterface = albumDialogInterface;
         return fragment;
     }
@@ -47,7 +52,7 @@ public class AlbumDialogFragment extends android.support.v4.app.DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_album, container);
+        View view = inflater.inflate(R.layout.dialog_rename_album, container);
 
         Realm.init(getContext());
         mRealm = Realm.getDefaultInstance();
@@ -55,10 +60,12 @@ public class AlbumDialogFragment extends android.support.v4.app.DialogFragment {
         mRealmHelper = new RealmHelper(mRealm);
 //        mRealmHelper.updateAlbumSorted();
 
+        final String oldName = getArguments().getString("oldName");
 
         albumTitleEt = view.findViewById(R.id.album_title_et);
         okButton = view.findViewById(R.id.ok_button);
         cancelButton = view.findViewById(R.id.cancel_button);
+        resetButton = view.findViewById(R.id.delete_button);
         albumTitleEt.requestFocus();
         cannot_add_album = view.findViewById(R.id.cannot_add_album);
 
@@ -116,7 +123,8 @@ public class AlbumDialogFragment extends android.support.v4.app.DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAlbumDialogInterface.createAlbum((albumTitleEt.getText().toString()));
+                final String newName = albumTitleEt.getText().toString();
+                mAlbumDialogInterface.renameAlbum(oldName,newName);
                 dismiss();
             }
         });
@@ -127,9 +135,20 @@ public class AlbumDialogFragment extends android.support.v4.app.DialogFragment {
                 dismiss();
             }
         });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                albumTitleEt.setText(null);
+
+            }
+        });
     return view;
 
     }
+
+
+
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);

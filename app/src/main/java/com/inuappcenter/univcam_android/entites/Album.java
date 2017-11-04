@@ -4,7 +4,6 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 /**
@@ -13,7 +12,6 @@ import io.realm.annotations.Required;
 
 public class Album extends RealmObject {
 
-    @PrimaryKey
     private String albumName;
 
     private Date albumDate;
