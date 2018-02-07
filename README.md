@@ -13,5 +13,5 @@
 
 
 | 카메라, 갤러리에서 사진 가져와서 가져와서 등록하기 | 
-| --- | 
-| ![univcam1.gif](univcam1.gif)  | 
+| --- | --- | --- | 
+| ![univcam1.gif](univcam1.gif)  | ![univcam2.gif](univcam2.gif)  | ![univcam3.gif](univcam3.gif)  | 
