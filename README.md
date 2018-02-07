@@ -24,6 +24,6 @@
 | ![univcam2.gif](univcam2.gif)  | 
 
 
-| 앨범 추가,  | 
+| 앨범 추가  | 
 | --- | 
 | ![univcam3.gif](univcam3.gif)  | 
