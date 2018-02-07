@@ -12,16 +12,18 @@
 | ![intro](intro.png)  | ![intro2](intro2.png) | ![intro3](intro3.png) | ![intro4](intro4.png) | ![intro5](intro5.png) | 
 
 
-|  | 
+
+## 실제 앱 동작 화면
+| 메인화면, 사진찍기, 상세화면 | 
 | --- | 
 | ![univcam1.gif](univcam1.gif)  | 
 
 
-|  | 
+| 즐겨찾는 앨범, 앨범 검색 | 
 | --- | 
 | ![univcam2.gif](univcam2.gif)  | 
 
 
-|  | 
+| 앨범 추가,  | 
 | --- | 
 | ![univcam3.gif](univcam3.gif)  | 
