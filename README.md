@@ -30,7 +30,13 @@
 | --- | 
 | ![univcam3.gif](univcam3.gif)  | 
 
-## 5. 팀원
+## 5. 개발환경
+- Android
+- Kotlin
+- RecyclerView
+- Realm
+
+## 6. 팀원
 
 - **서혁** ([https://spemer.com](mailto:crjang91@gmail.com))
   - Design (https://spemer.com/portfolio/album-image-sort-application-univcam.html)
